@@ -1,0 +1,1500 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20252.25.1003.1601                               -->
+<workbook original-version='18.1' source-build='2025.2.4 (20252.25.1003.1601)' source-platform='win' version='18.1' xml:base='https://public.tableau.com' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AnimationOnByDefault />
+    <MapboxVectorStylesAndLayers />
+    <MarkAnimation />
+    <ObjectModelEncapsulateLegacy />
+    <ObjectModelExtractV2 />
+    <ObjectModelTableType />
+    <SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <SortTagCleanup />
+    <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <repository-location id='CoffeeShopAnalysisVIZ' path='/workbooks' revision='1.5' />
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource hasconnection='false' inline='true' name='Parameters' version='18.1'>
+      <aliases enabled='yes' />
+      <column caption='Selected Region' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Latin America&quot;'>
+        <calculation class='tableau' formula='&quot;Latin America&quot;' />
+        <members>
+          <member value='&quot;Africa&quot;' />
+          <member value='&quot;Oceania&quot;' />
+          <member value='&quot;Latin America&quot;' />
+        </members>
+      </column>
+    </datasource>
+    <datasource caption='products_list' inline='true' name='federated.1pprlxx15y2bw116f3g580p2wvuz' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='products_list' name='textscan.1ugl8pl031dng21exg50c0psndc6'>
+            <connection class='textscan' directory='C:/Users/Lenovo/Desktop/stuff/coffee project/mart' filename='products_list.csv' password='' server='' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.1ugl8pl031dng21exg50c0psndc6' name='products_list.csv' table='[products_list#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+            <column datatype='string' name='product' ordinal='0' />
+            <column datatype='real' name='score' ordinal='1' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[products_list.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;uk&quot;</attribute>
+              <attribute datatype='string' name='currency'>&quot;₴&quot;</attribute>
+              <attribute datatype='string' name='decimal-char'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='exponent-char'>&quot;е&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;uk_UA&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+              <attribute datatype='string' name='thousands-char'>&quot; &quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[product]</local-name>
+            <parent-name>[products_list.csv]</parent-name>
+            <remote-alias>product</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[products_list.csv_CD623CDBFA45436D9049654DE29FEB2E]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>score</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[score]</local-name>
+            <parent-name>[products_list.csv]</parent-name>
+            <remote-alias>score</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[products_list.csv_CD623CDBFA45436D9049654DE29FEB2E]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Rank' datatype='string' name='[Calculation_329044302423019520]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='IF [score] = 1 THEN &quot;Must-have&quot;&#13;&#10;ELSEIF [score] &gt;= 0.7 THEN &quot;Strong performer&quot;&#13;&#10;ELSE &quot;Moderate&quot;&#13;&#10;END' />
+      </column>
+      <column caption='products_list.csv' datatype='table' name='[__tableau_internal_object_id__].[products_list.csv_CD623CDBFA45436D9049654DE29FEB2E]' role='measure' type='quantitative' />
+      <column-instance column='[Calculation_329044302423019520]' derivation='None' name='[none:Calculation_329044302423019520:nk]' pivot='key' type='nominal' />
+      <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='Data/TableauTemp/#TableauTemp_0zvu2zq1dyu8a019jbr7000jnyu0.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>product</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[product]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>product</remote-alias>
+              <ordinal>0</ordinal>
+              <family>products_list.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>9</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>score</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[score]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>score</remote-alias>
+              <ordinal>1</ordinal>
+              <family>products_list.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>7</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:Calculation_329044302423019520:nk]' type='palette'>
+            <map to='#59a14f'>
+              <bucket>&quot;Must-have&quot;</bucket>
+            </map>
+            <map to='#8cd17d'>
+              <bucket>&quot;Strong performer&quot;</bucket>
+            </map>
+            <map to='#d7ce9f'>
+              <bucket>&quot;Moderate&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Ukraine&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <object-graph>
+        <objects>
+          <object caption='products_list.csv' id='products_list.csv_CD623CDBFA45436D9049654DE29FEB2E'>
+            <properties context=''>
+              <relation connection='textscan.1ugl8pl031dng21exg50c0psndc6' name='products_list.csv' table='[products_list#csv]' type='table'>
+                <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+                  <column datatype='string' name='product' ordinal='0' />
+                  <column datatype='real' name='score' ordinal='1' />
+                </columns>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+    <datasource caption='holidays_elasticity' inline='true' name='federated.0lu54w51b5721o1cokn200d3c4rz' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='holidays_elasticity' name='textscan.116x9si0lbyz5e12djxbs0pn1ynx'>
+            <connection class='textscan' directory='C:/Users/Lenovo/Desktop/stuff/coffee project/mart' filename='holidays_elasticity.csv' password='' server='' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.116x9si0lbyz5e12djxbs0pn1ynx' name='holidays_elasticity.csv' table='[holidays_elasticity#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+            <column datatype='string' name='Holiday_Name' ordinal='0' />
+            <column datatype='real' name='Avg_Sales' ordinal='1' />
+            <column datatype='string' name='Date' ordinal='2' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[holidays_elasticity.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;uk&quot;</attribute>
+              <attribute datatype='string' name='currency'>&quot;₴&quot;</attribute>
+              <attribute datatype='string' name='decimal-char'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='exponent-char'>&quot;е&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;uk_UA&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+              <attribute datatype='string' name='thousands-char'>&quot; &quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Holiday_Name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[Holiday_Name]</local-name>
+            <parent-name>[holidays_elasticity.csv]</parent-name>
+            <remote-alias>Holiday_Name</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[holidays_elasticity.csv_064B461CB9AD439CB5244F08958319CC]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Avg_Sales</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Avg_Sales]</local-name>
+            <parent-name>[holidays_elasticity.csv]</parent-name>
+            <remote-alias>Avg_Sales</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[holidays_elasticity.csv_064B461CB9AD439CB5244F08958319CC]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Date</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[Date]</local-name>
+            <parent-name>[holidays_elasticity.csv]</parent-name>
+            <remote-alias>Date</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[holidays_elasticity.csv_064B461CB9AD439CB5244F08958319CC]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Convert to Date' datatype='date' name='[Calculation_329044302426112001]' role='dimension' type='ordinal'>
+        <calculation class='tableau' formula='DATE(DATEPARSE(&quot;dd-MM-yyyy&quot;, [Date] + &quot;-2024&quot;))' />
+      </column>
+      <column caption='holidays_elasticity.csv' datatype='table' name='[__tableau_internal_object_id__].[holidays_elasticity.csv_064B461CB9AD439CB5244F08958319CC]' role='measure' type='quantitative' />
+      <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='Data/TableauTemp/#TableauTemp_1lujurp0nz24d4117ucpu06vhd4n.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>Holiday_Name</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[Holiday_Name]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Holiday_Name</remote-alias>
+              <ordinal>0</ordinal>
+              <family>holidays_elasticity.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>4</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Avg_Sales</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Avg_Sales]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Avg_Sales</remote-alias>
+              <ordinal>1</ordinal>
+              <family>holidays_elasticity.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>4</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Date</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[Date]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Date</remote-alias>
+              <ordinal>2</ordinal>
+              <family>holidays_elasticity.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>4</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Ukraine&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <object-graph>
+        <objects>
+          <object caption='holidays_elasticity.csv' id='holidays_elasticity.csv_064B461CB9AD439CB5244F08958319CC'>
+            <properties context=''>
+              <relation connection='textscan.116x9si0lbyz5e12djxbs0pn1ynx' name='holidays_elasticity.csv' table='[holidays_elasticity#csv]' type='table'>
+                <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+                  <column datatype='string' name='Holiday_Name' ordinal='0' />
+                  <column datatype='real' name='Avg_Sales' ordinal='1' />
+                  <column datatype='string' name='Date' ordinal='2' />
+                </columns>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+    <datasource caption='coffee_country_exports' inline='true' name='federated.0877eb309nibms1c3ocnp0q1fjlh' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='coffee_country_exports' name='textscan.1n75nrf15uxvvj1aqwfr11uf8jhj'>
+            <connection class='textscan' directory='C:/Users/Lenovo/Desktop/stuff/coffee project/mart' filename='coffee_country_exports.csv' password='' server='' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.1n75nrf15uxvvj1aqwfr11uf8jhj' name='coffee_country_exports.csv' table='[coffee_country_exports#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+            <column datatype='integer' name='Rank' ordinal='0' />
+            <column datatype='string' name='Country' ordinal='1' />
+            <column datatype='integer' name='Country_Code' ordinal='2' />
+            <column datatype='integer' name='Year' ordinal='3' />
+            <column datatype='real' name='Value_USD' ordinal='4' />
+            <column datatype='real' name='Weight_tons' ordinal='5' />
+            <column datatype='real' name='Avg_Price_USD_per_ton' ordinal='6' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;uk&quot;</attribute>
+              <attribute datatype='string' name='currency'>&quot;₴&quot;</attribute>
+              <attribute datatype='string' name='decimal-char'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='exponent-char'>&quot;е&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;uk_UA&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+              <attribute datatype='string' name='thousands-char'>&quot; &quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Rank</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Rank]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Rank</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Country</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[Country]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Country</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Country_Code</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Country_Code]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Country_Code</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Year</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Year]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Year</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Value_USD</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Value_USD]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Value_USD</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Weight_tons</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Weight_tons]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Weight_tons</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Avg_Price_USD_per_ton</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Avg_Price_USD_per_ton]</local-name>
+            <parent-name>[coffee_country_exports.csv]</parent-name>
+            <remote-alias>Avg_Price_USD_per_ton</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Region' datatype='string' name='[Calculation_329044302433873922]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='IF [Country] IN (&quot;Brazil&quot;, &quot;Colombia&quot;, &quot;Peru&quot;, &quot;Honduras&quot;, &#13;&#10;                 &quot;Nicaragua&quot;, &quot;Guatemala&quot;, &quot;El Salvador&quot;, &quot;Costa Rica&quot;)&#13;&#10;THEN &quot;Latin America&quot;&#13;&#10;ELSEIF [Country] IN (&quot;Ethiopia&quot;, &quot;Kenya&quot;)&#13;&#10;THEN &quot;Africa&quot;&#13;&#10;ELSEIF [Country] IN (&quot;Papua New Guinea&quot;)&#13;&#10;THEN &quot;Oceania&quot;&#13;&#10;END' />
+      </column>
+      <column caption='Region Filter' datatype='boolean' name='[Calculation_329044302434242563]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='[Calculation_329044302433873922] = [Parameters].[Parameter 1]' />
+      </column>
+      <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+      <column datatype='integer' name='[Country_Code]' role='dimension' type='ordinal' />
+      <column datatype='integer' name='[Year]' role='dimension' type='quantitative' />
+      <column caption='coffee_country_exports.csv' datatype='table' name='[__tableau_internal_object_id__].[coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4]' role='measure' type='quantitative' />
+      <column-instance column='[Country]' derivation='Attribute' name='[attr:Country:nk]' pivot='key' type='nominal' />
+      <column-instance column='[Country]' derivation='None' name='[none:Country:nk]' pivot='key' type='nominal' />
+      <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='Data/TableauTemp/#TableauTemp_08ffahs0tyr4771ds6m8j1idz97e.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>Rank</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[Rank]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Rank</remote-alias>
+              <ordinal>0</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Country</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[Country]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Country</remote-alias>
+              <ordinal>1</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Country_Code</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[Country_Code]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Country_Code</remote-alias>
+              <ordinal>2</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Year</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[Year]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Year</remote-alias>
+              <ordinal>3</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Value_USD</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Value_USD]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Value_USD</remote-alias>
+              <ordinal>4</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Weight_tons</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Weight_tons]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Weight_tons</remote-alias>
+              <ordinal>5</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>Avg_Price_USD_per_ton</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[Avg_Price_USD_per_ton]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>Avg_Price_USD_per_ton</remote-alias>
+              <ordinal>6</ordinal>
+              <family>coffee_country_exports.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>11</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:Country:nk]' type='palette'>
+            <map to='#499894'>
+              <bucket>&quot;Nicaragua&quot;</bucket>
+            </map>
+            <map to='#4e79a7'>
+              <bucket>&quot;Brazil&quot;</bucket>
+            </map>
+            <map to='#59a14f'>
+              <bucket>&quot;Ethiopia&quot;</bucket>
+            </map>
+            <map to='#86bcb6'>
+              <bucket>&quot;Papua New Guinea&quot;</bucket>
+            </map>
+            <map to='#8cd17d'>
+              <bucket>&quot;Guatemala&quot;</bucket>
+            </map>
+            <map to='#a0cbe8'>
+              <bucket>&quot;Colombia&quot;</bucket>
+            </map>
+            <map to='#b6992d'>
+              <bucket>&quot;Honduras&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;Peru&quot;</bucket>
+            </map>
+            <map to='#f1ce63'>
+              <bucket>&quot;Kenya&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;Costa Rica&quot;</bucket>
+            </map>
+            <map to='#ffbe7d'>
+              <bucket>&quot;El Salvador&quot;</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[attr:Country:nk]' type='palette'>
+            <map to='#499894'>
+              <bucket>&quot;Nicaragua&quot;</bucket>
+            </map>
+            <map to='#4e79a7'>
+              <bucket>&quot;Brazil&quot;</bucket>
+            </map>
+            <map to='#59a14f'>
+              <bucket>&quot;Ethiopia&quot;</bucket>
+            </map>
+            <map to='#86bcb6'>
+              <bucket>&quot;Papua New Guinea&quot;</bucket>
+            </map>
+            <map to='#8cd17d'>
+              <bucket>&quot;Guatemala&quot;</bucket>
+            </map>
+            <map to='#a0cbe8'>
+              <bucket>&quot;Colombia&quot;</bucket>
+            </map>
+            <map to='#b6992d'>
+              <bucket>&quot;Honduras&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;Peru&quot;</bucket>
+            </map>
+            <map to='#f1ce63'>
+              <bucket>&quot;Kenya&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;Costa Rica&quot;</bucket>
+            </map>
+            <map to='#ffbe7d'>
+              <bucket>&quot;El Salvador&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Ukraine&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <datasource-dependencies datasource='Parameters'>
+        <column caption='Selected Region' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Latin America&quot;'>
+          <calculation class='tableau' formula='&quot;Latin America&quot;' />
+        </column>
+      </datasource-dependencies>
+      <object-graph>
+        <objects>
+          <object caption='coffee_country_exports.csv' id='coffee_country_exports.csv_DE597274EA5D4A9D99DF234FF4D7B4C4'>
+            <properties context=''>
+              <relation connection='textscan.1n75nrf15uxvvj1aqwfr11uf8jhj' name='coffee_country_exports.csv' table='[coffee_country_exports#csv]' type='table'>
+                <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+                  <column datatype='integer' name='Rank' ordinal='0' />
+                  <column datatype='string' name='Country' ordinal='1' />
+                  <column datatype='integer' name='Country_Code' ordinal='2' />
+                  <column datatype='integer' name='Year' ordinal='3' />
+                  <column datatype='real' name='Value_USD' ordinal='4' />
+                  <column datatype='real' name='Weight_tons' ordinal='5' />
+                  <column datatype='real' name='Avg_Price_USD_per_ton' ordinal='6' />
+                </columns>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+    <datasource caption='coffee-consumption-by-country-2026' inline='true' name='federated.1ixcbdo0h6x7dx103st211k8iiv3' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='coffee-consumption-by-country-2026' name='textscan.08eheah02pk2lh164zprk1an3txo'>
+            <connection class='textscan' directory='C:/Users/Lenovo/Desktop/stuff/coffee project/raw' filename='coffee-consumption-by-country-2026.csv' password='' server='' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.08eheah02pk2lh164zprk1an3txo' name='coffee-consumption-by-country-2026.csv' table='[coffee-consumption-by-country-2026#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+            <column datatype='string' name='flagCode' ordinal='0' />
+            <column datatype='string' name='country' ordinal='1' />
+            <column datatype='integer' name='CoffeeConsumptionTotal_2023' ordinal='2' />
+            <column datatype='real' name='CoffeeConsumptionRateCountries_2023' ordinal='3' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[coffee-consumption-by-country-2026.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;uk&quot;</attribute>
+              <attribute datatype='string' name='currency'>&quot;₴&quot;</attribute>
+              <attribute datatype='string' name='decimal-char'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='exponent-char'>&quot;е&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;uk_UA&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+              <attribute datatype='string' name='thousands-char'>&quot; &quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>flagCode</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[flagCode]</local-name>
+            <parent-name>[coffee-consumption-by-country-2026.csv]</parent-name>
+            <remote-alias>flagCode</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>country</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[country]</local-name>
+            <parent-name>[coffee-consumption-by-country-2026.csv]</parent-name>
+            <remote-alias>country</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LUK_RUA' />
+            <object-id>[coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CoffeeConsumptionTotal_2023</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[CoffeeConsumptionTotal_2023]</local-name>
+            <parent-name>[coffee-consumption-by-country-2026.csv]</parent-name>
+            <remote-alias>CoffeeConsumptionTotal_2023</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CoffeeConsumptionRateCountries_2023</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[CoffeeConsumptionRateCountries_2023]</local-name>
+            <parent-name>[coffee-consumption-by-country-2026.csv]</parent-name>
+            <remote-alias>CoffeeConsumptionRateCountries_2023</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='coffee-consumption-by-country-2026.csv' datatype='table' name='[__tableau_internal_object_id__].[coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C]' role='measure' type='quantitative' />
+      <column datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+      <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='Data/TableauTemp/#TableauTemp_1v1xaqo1jtdspe1ddcj0e1yw3bak.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>flagCode</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[flagCode]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>flagCode</remote-alias>
+              <ordinal>0</ordinal>
+              <family>coffee-consumption-by-country-2026.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>176</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>country</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[country]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>country</remote-alias>
+              <ordinal>1</ordinal>
+              <family>coffee-consumption-by-country-2026.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>176</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LUK_RUA' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>CoffeeConsumptionTotal_2023</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[CoffeeConsumptionTotal_2023]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>CoffeeConsumptionTotal_2023</remote-alias>
+              <ordinal>2</ordinal>
+              <family>coffee-consumption-by-country-2026.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>86</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>CoffeeConsumptionRateCountries_2023</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[CoffeeConsumptionRateCountries_2023]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>CoffeeConsumptionRateCountries_2023</remote-alias>
+              <ordinal>3</ordinal>
+              <family>coffee-consumption-by-country-2026.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>160</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Ukraine&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <object-graph>
+        <objects>
+          <object caption='coffee-consumption-by-country-2026.csv' id='coffee-consumption-by-country-2026.csv_9CA72EE7B27A406EBB52ABE11A3B456C'>
+            <properties context=''>
+              <relation connection='textscan.08eheah02pk2lh164zprk1an3txo' name='coffee-consumption-by-country-2026.csv' table='[coffee-consumption-by-country-2026#csv]' type='table'>
+                <columns character-set='UTF-8' header='yes' locale='uk_UA'>
+                  <column datatype='string' name='flagCode' ordinal='0' />
+                  <column datatype='string' name='country' ordinal='1' />
+                  <column datatype='integer' name='CoffeeConsumptionTotal_2023' ordinal='2' />
+                  <column datatype='real' name='CoffeeConsumptionRateCountries_2023' ordinal='3' />
+                </columns>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+  </datasources>
+  <mapsources>
+    <mapsource name='Tableau' />
+  </mapsources>
+  <worksheets>
+    <worksheet name='Coffee Exporters'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname='Tw Cen MT'>List of Exporters</run>
+          </formatted-text>
+        </title>
+        <caption>
+          <formatted-text>
+            <run fontcolor='#474747' fontname='Arial,sans-serif' fontsize='17'>№ </run>
+            <run fontcolor='#000000' fontname='Tw Cen MT' fontsize='12'>Rank of exporter by average price per ton (cheapest = 1)</run>
+          </formatted-text>
+        </caption>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='coffee_country_exports' name='federated.0877eb309nibms1c3ocnp0q1fjlh' />
+            <datasource name='Parameters' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='Parameters'>
+            <column caption='Selected Region' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Latin America&quot;'>
+              <calculation class='tableau' formula='&quot;Latin America&quot;' />
+            </column>
+          </datasource-dependencies>
+          <datasource-dependencies datasource='federated.0877eb309nibms1c3ocnp0q1fjlh'>
+            <column datatype='real' name='[Avg_Price_USD_per_ton]' role='measure' type='quantitative' />
+            <column caption='Region' datatype='string' name='[Calculation_329044302433873922]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='IF [Country] IN (&quot;Brazil&quot;, &quot;Colombia&quot;, &quot;Peru&quot;, &quot;Honduras&quot;, &#13;&#10;                 &quot;Nicaragua&quot;, &quot;Guatemala&quot;, &quot;El Salvador&quot;, &quot;Costa Rica&quot;)&#13;&#10;THEN &quot;Latin America&quot;&#13;&#10;ELSEIF [Country] IN (&quot;Ethiopia&quot;, &quot;Kenya&quot;)&#13;&#10;THEN &quot;Africa&quot;&#13;&#10;ELSEIF [Country] IN (&quot;Papua New Guinea&quot;)&#13;&#10;THEN &quot;Oceania&quot;&#13;&#10;END' />
+            </column>
+            <column caption='Region Filter' datatype='boolean' name='[Calculation_329044302434242563]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='[Calculation_329044302433873922] = [Parameters].[Parameter 1]' />
+            </column>
+            <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+            <column datatype='integer' name='[Rank]' role='measure' type='quantitative' />
+            <column-instance column='[Country]' derivation='Attribute' name='[attr:Country:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Rank]' derivation='Attribute' name='[attr:Rank:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Calculation_329044302434242563]' derivation='None' name='[none:Calculation_329044302434242563:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Country]' derivation='None' name='[none:Country:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Avg_Price_USD_per_ton]' derivation='Sum' name='[sum:Avg_Price_USD_per_ton:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[none:Calculation_329044302434242563:nk]'>
+            <groupfilter function='member' level='[none:Calculation_329044302434242563:nk]' member='true' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0877eb309nibms1c3ocnp0q1fjlh].[none:Calculation_329044302434242563:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0877eb309nibms1c3ocnp0q1fjlh].[Longitude (generated)]' field-type='quantitative' max='-1497527.6087239571' min='-12232070.780837856' projection='EPSG:3857' range-type='fixed' scope='cols' type='space' />
+            <encoding attr='space' class='0' field='[federated.0877eb309nibms1c3ocnp0q1fjlh].[Latitude (generated)]' field-type='quantitative' max='2421063.1198518015' min='-4393894.3277552696' projection='EPSG:3857' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]' palette='orange_10_0' type='interpolated' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='color' field='[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]' value='Price per Ton&#10;'>
+              <formatted-text>
+                <run>Price per Ton&#10;</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='map-layer'>
+            <format attr='enabled' id='b01002_001e' value='false' />
+            <format attr='enabled' id='b01002_002e' value='false' />
+            <format attr='enabled' id='b01002_003e' value='false' />
+            <format attr='enabled' id='dp02_0001e' value='false' />
+            <format attr='enabled' id='dp02_0015e' value='false' />
+            <format attr='enabled' id='dp03_0027e_plus_dp03_0029e' value='false' />
+            <format attr='enabled' id='dp03_0028e' value='false' />
+            <format attr='enabled' id='dp03_0030e_plus_dp03_0031e' value='false' />
+            <format attr='enabled' id='dp03_0062e' value='false' />
+            <format attr='enabled' id='dp03_0088e' value='false' />
+            <format attr='enabled' id='dp04_0001e' value='false' />
+            <format attr='enabled' id='dp04_0046e' value='false' />
+            <format attr='enabled' id='dp04_0047e' value='false' />
+            <format attr='enabled' id='dp04_0089e' value='false' />
+            <format attr='enabled' id='dp05_0001e' value='false' />
+            <format attr='enabled' id='dp05_0002e_div_dp05_0003e' value='false' />
+            <format attr='enabled' id='dp05_0032e' value='false' />
+            <format attr='enabled' id='dp05_0033e' value='false' />
+            <format attr='enabled' id='dp05_0034e' value='false' />
+            <format attr='enabled' id='dp05_0039e' value='false' />
+            <format attr='enabled' id='dp05_0047e' value='false' />
+            <format attr='enabled' id='dp05_0053e' value='false' />
+            <format attr='enabled' id='dp05_0066e' value='false' />
+            <format attr='enabled' id='dp05_0077e' value='false' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0' />
+            <format attr='wrap' value='false' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[attr:Rank:ok]' />
+              <text column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]' />
+              <text column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[attr:Country:nk]' />
+              <lod column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[none:Country:nk]' />
+              <color column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]' />
+              <geometry column='[federated.0877eb309nibms1c3ocnp0q1fjlh].[Geometry (generated)]' />
+            </encodings>
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#757575'>Country:&#9;</run>
+                <run bold='true'><![CDATA[<[federated.0877eb309nibms1c3ocnp0q1fjlh].[none:Country:nk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#757575'>Rank:&#9;</run>
+                <run bold='true'><![CDATA[<[federated.0877eb309nibms1c3ocnp0q1fjlh].[attr:Rank:ok]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#757575'>Avg_Price_USD_per_ton:&#9;</run>
+                <run bold='true'><![CDATA[<[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
+            <customized-label>
+              <formatted-text>
+                <run bold='true' fontcolor='#ffffff' fontsize='14' italic='true'><![CDATA[<[federated.0877eb309nibms1c3ocnp0q1fjlh].[attr:Rank:ok]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontsize='10'><![CDATA[<[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]>]]></run>
+                <run><![CDATA[
+<[federated.0877eb309nibms1c3ocnp0q1fjlh].[attr:Country:nk]>]]></run>
+              </formatted-text>
+            </customized-label>
+            <style>
+              <style-rule element='cell'>
+                <format attr='text-align' value='auto' />
+                <format attr='wrap' value='off' />
+                <format attr='vertical-align' value='auto' />
+              </style-rule>
+              <style-rule element='datalabel'>
+                <format attr='color-mode' value='match' />
+                <format attr='font-family' value='Tw Cen MT' />
+                <format attr='font-size' value='11' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-mode' value='all' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0877eb309nibms1c3ocnp0q1fjlh].[Latitude (generated)]</rows>
+        <cols>[federated.0877eb309nibms1c3ocnp0q1fjlh].[Longitude (generated)]</cols>
+      </table>
+      <simple-id uuid='{5E050C17-313C-45EE-A287-1E5FFFDE43FC}' />
+    </worksheet>
+    <worksheet name='International Exposure'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname='Tw Cen MT'>Top 25 Countries for Expansion</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='coffee-consumption-by-country-2026' name='federated.1ixcbdo0h6x7dx103st211k8iiv3' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1ixcbdo0h6x7dx103st211k8iiv3'>
+            <column datatype='real' name='[CoffeeConsumptionRateCountries_2023]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[CoffeeConsumptionTotal_2023]' role='measure' type='quantitative' />
+            <column-instance column='[CoffeeConsumptionRateCountries_2023]' derivation='Attribute' name='[attr:CoffeeConsumptionRateCountries_2023:qk]' pivot='key' type='quantitative' />
+            <column datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+            <column-instance column='[CoffeeConsumptionRateCountries_2023]' derivation='None' name='[none:CoffeeConsumptionRateCountries_2023:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[country]' derivation='None' name='[none:country:nk]' pivot='key' type='nominal' />
+            <column-instance column='[CoffeeConsumptionTotal_2023]' derivation='Sum' name='[sum:CoffeeConsumptionTotal_2023:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:country:nk]'>
+            <groupfilter count='25' end='top' function='end' units='records' user:ui-marker='end' user:ui-top-by-field='true'>
+              <groupfilter direction='DESC' expression='SUM([CoffeeConsumptionTotal_2023])' function='order' user:ui-marker='order'>
+                <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Afghanistan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Albania&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Algeria&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Angola&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Antigua and Barbuda&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Argentina&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Armenia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Australia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Austria&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Azerbaijan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bahamas&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bahrain&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bangladesh&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Barbados&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Belarus&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Belgium&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Belize&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bhutan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bolivia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bosnia and Herzegovina&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Botswana&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Brazil&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Bulgaria&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Burkina Faso&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Cambodia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Cameroon&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Canada&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Cape Verde&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Chile&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;China&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Colombia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Comoros&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Costa Rica&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Croatia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Cyprus&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Czechia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Denmark&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Djibouti&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Dominican Republic&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;DR Congo&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ecuador&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Egypt&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;El Salvador&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Estonia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Eswatini&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ethiopia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Fiji&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Finland&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;France&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;French Polynesia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Gabon&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Gambia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Georgia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Germany&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ghana&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Greece&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Grenada&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Guatemala&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Guinea&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Guinea-Bissau&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Guyana&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Haiti&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Honduras&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Hong Kong&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Hungary&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Iceland&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;India&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Indonesia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Iran&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Iraq&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ireland&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Israel&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Italy&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ivory Coast&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Jamaica&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Jordan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Kazakhstan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Kenya&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Kiribati&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Kuwait&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Kyrgyzstan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Laos&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Latvia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Lebanon&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Lesotho&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Liberia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Libya&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Lithuania&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Luxembourg&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Macau&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Madagascar&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Malawi&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Maldives&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Malta&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Marshall Islands&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Mauritania&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Mauritius&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Mexico&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Micronesia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Moldova&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Mongolia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Montenegro&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Morocco&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Mozambique&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Myanmar&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Namibia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Nauru&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Nepal&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Netherlands&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;New Caledonia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;New Zealand&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Nicaragua&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Niger&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Nigeria&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;North Macedonia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Norway&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Oman&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Pakistan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Panama&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Papua New Guinea&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Paraguay&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Peru&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Philippines&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Poland&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Portugal&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Qatar&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Republic of the Congo&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Romania&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Russia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Rwanda&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Saint Kitts and Nevis&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Saint Lucia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Saint Vincent and the Grenadines&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Samoa&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Sao Tome and Principe&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Saudi Arabia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Senegal&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Serbia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Seychelles&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Sierra Leone&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Slovakia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Slovenia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Solomon Islands&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;South Africa&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;South Korea&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Spain&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Sri Lanka&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Suriname&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Sweden&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Switzerland&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Syria&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Taiwan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Tajikistan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Tanzania&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Thailand&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Timor-Leste&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Tonga&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Trinidad and Tobago&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Tunisia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Turkey&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Turkmenistan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Tuvalu&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Uganda&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Ukraine&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;United Arab Emirates&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;United Kingdom&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Uruguay&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Uzbekistan&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Vanuatu&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Venezuela&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Vietnam&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Yemen&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Zambia&quot;' />
+                  <groupfilter function='member' level='[none:country:nk]' member='&quot;Zimbabwe&quot;' />
+                </groupfilter>
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <filter class='quantitative' column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]' included-values='in-range' />
+          <slices>
+            <column>[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:country:nk]</column>
+            <column>[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='cell'>
+            <format attr='text-format' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='*' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:CoffeeConsumptionRateCountries_2023:qk]' palette='brown_10_0' type='interpolated' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='omit-on-special' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='true' />
+            <format attr='break-on-special' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='true' />
+            <format attr='show-null-value-warning' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='true' />
+            <format attr='alternate-text' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='' />
+            <format attr='display-alternate-text' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' value='false' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='color' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:CoffeeConsumptionRateCountries_2023:qk]' value='Consumption Rate (per capita)&#10;'>
+              <formatted-text>
+                <run>Consumption Rate (per capita)&#10;</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]' value='Total Coffee Consumption&#10;'>
+              <formatted-text>
+                <run>Total Coffee Consumption&#10;</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Circle' />
+            <encodings>
+              <color column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:CoffeeConsumptionRateCountries_2023:qk]' />
+              <size column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]' />
+              <text column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:country:nk]' />
+              <text column='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]' />
+            </encodings>
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#757575'>Coffee Consumption Rate (per capita):	</run>
+                <run bold='true'><![CDATA[<[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:CoffeeConsumptionRateCountries_2023:qk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#757575'>Country:&#9;</run>
+                <run bold='true'><![CDATA[<[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:country:nk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#757575'>Total Coffee Consumption:&#9;</run>
+                <run bold='true'><![CDATA[<[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
+            <customized-label>
+              <formatted-text>
+                <run fontname='Tw Cen MT'><![CDATA[<[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:country:nk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontname='Tw Cen MT' italic='true'><![CDATA[<[federated.1ixcbdo0h6x7dx103st211k8iiv3].[attr:CoffeeConsumptionRateCountries_2023:qk]>]]></run>
+              </formatted-text>
+            </customized-label>
+            <style>
+              <style-rule element='datalabel'>
+                <format attr='color-mode' value='auto' />
+                <format attr='font-size' value='8' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-labels-line-first' value='true' />
+                <format attr='mark-labels-line-last' value='true' />
+                <format attr='mark-labels-range-min' value='true' />
+                <format attr='mark-labels-range-max' value='true' />
+                <format attr='mark-labels-mode' value='all' />
+                <format attr='mark-labels-range-scope' value='pane' />
+                <format attr='mark-labels-range-field' value='' />
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{A60E8D6F-1E63-42C7-879D-8A1F39A54A45}' />
+    </worksheet>
+    <worksheet name='Product Menu'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname='Tw Cen MT'>Top Selling Products</run>
+          </formatted-text>
+        </title>
+        <caption>
+          <formatted-text>
+            <run fontcolor='#000000' fontname='Tw Cen MT' fontsize='12' italic='true' underline='true'>Sales</run>
+            <run fontcolor='#000000' fontname='Tw Cen MT' fontsize='12'> -- Revenue rank (0–1) within a category (Coffee/Tea/Vending Machine)</run>
+          </formatted-text>
+        </caption>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='products_list' name='federated.1pprlxx15y2bw116f3g580p2wvuz' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1pprlxx15y2bw116f3g580p2wvuz'>
+            <column caption='Rank' datatype='string' name='[Calculation_329044302423019520]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='IF [score] = 1 THEN &quot;Must-have&quot;&#13;&#10;ELSEIF [score] &gt;= 0.7 THEN &quot;Strong performer&quot;&#13;&#10;ELSE &quot;Moderate&quot;&#13;&#10;END' />
+            </column>
+            <column-instance column='[Calculation_329044302423019520]' derivation='None' name='[none:Calculation_329044302423019520:nk]' pivot='key' type='nominal' />
+            <column-instance column='[product]' derivation='None' name='[none:product:nk]' pivot='key' type='nominal' />
+            <column-instance column='[score]' derivation='None' name='[none:score:qk]' pivot='key' type='quantitative' />
+            <column datatype='string' name='[product]' role='dimension' type='nominal' />
+            <column datatype='real' name='[score]' role='measure' type='quantitative' />
+            <column-instance column='[score]' derivation='Sum' name='[sum:score:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <computed-sort column='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:product:nk]' direction='DESC' using='[federated.1pprlxx15y2bw116f3g580p2wvuz].[sum:score:qk]' />
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='title' class='0' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[sum:score:qk]' scope='cols' value='Score' />
+            <encoding attr='space' class='0' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[sum:score:qk]' field-type='quantitative' max='1.0' min='0.0' range-type='fixed' scope='cols' type='space' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='text-format' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='p0%' />
+            <format attr='text-align' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='right' />
+            <format attr='wrap' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='auto' />
+            <format attr='font-style' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='italic' />
+            <format attr='font-family' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='Tw Cen MT' />
+          </style-rule>
+          <style-rule element='field-labels-decoration'>
+            <format attr='font-style' value='normal' />
+            <format attr='font-weight' value='normal' />
+            <format attr='text-orientation' value='0' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='text-format' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[sum:score:qk]' value='p0%' />
+            <format attr='text-format' field='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' value='p0%' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='display-field-labels' scope='rows' value='false' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:Calculation_329044302423019520:nk]' />
+              <text column='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:score:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:product:nk]</rows>
+        <cols>[federated.1pprlxx15y2bw116f3g580p2wvuz].[sum:score:qk]</cols>
+      </table>
+      <simple-id uuid='{C0DCA7D2-EC73-4C34-A154-A7423A113F6A}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='137'>
+    <window class='worksheet' name='Product Menu'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='30'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.1pprlxx15y2bw116f3g580p2wvuz].[none:Calculation_329044302423019520:nk]' type='color' />
+          </strip>
+        </edge>
+        <edge name='bottom'>
+          <strip size='94'>
+            <card type='caption' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <zoom type='entire-view' />
+        <default-map-tool-selection tool='2' />
+      </viewpoint>
+      <simple-id uuid='{03AD6C54-CFE9-4476-A9AC-543823098F42}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Coffee Exporters'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='30'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0877eb309nibms1c3ocnp0q1fjlh].[sum:Avg_Price_USD_per_ton:qk]' type='color' />
+            <card mode='compact' param='[Parameters].[Parameter 1]' type='parameter' />
+          </strip>
+        </edge>
+        <edge name='bottom'>
+          <strip size='94'>
+            <card type='caption' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{A1E7C0CE-EEBC-490D-BEC6-9D6A40E7ACBA}' />
+    </window>
+    <window class='worksheet' name='International Exposure'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='30'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[sum:CoffeeConsumptionTotal_2023:qk]' show-domain='false' show-null-ctrls='false' type='filter' />
+            <card pane-specification-id='0' param='[federated.1ixcbdo0h6x7dx103st211k8iiv3].[none:CoffeeConsumptionRateCountries_2023:qk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <zoom type='entire-view' />
+      </viewpoint>
+      <simple-id uuid='{B5ECAE70-1BFF-4A28-B7D0-F2126015FCCA}' />
+    </window>
+  </windows>
+</workbook>

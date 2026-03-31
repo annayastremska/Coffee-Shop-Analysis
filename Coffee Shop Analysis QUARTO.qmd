@@ -1,0 +1,438 @@
+---
+title: "How to Open a Coffee Shop in NYC"
+subtitle: "A data analytics project — simulating a business decision with open data"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+    toc-title: "Contents"
+    toc-location: left
+    smooth-scroll: true
+    code-fold: true
+    code-summary: "Show code"
+    fig-width: 9
+    fig-height: 5
+    self-contained: false
+    embed-resources: false
+    css: docs/style.css
+    include-in-header: |
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(reactable)
+library(htmltools)
+library(ggrepel)
+
+neighborhood_scores <- read_csv("mart/neighborhood_scores.csv")
+products_list       <- read_csv("mart/products_list.csv")
+holidays_elasticity <- read_csv("mart/holidays_elasticity.csv")
+country_exports     <- read_csv("mart/coffee_country_exports.csv")
+
+COFFEE <- "#C8914A"
+DARK   <- "#2C1810"
+LIGHT  <- "#E8C99A"
+CREAM  <- "#F5EFE6"
+
+theme_coffee <- theme_minimal(base_size = 13) +
+  theme(
+    plot.background  = element_rect(fill = "#FAFAF8", color = NA),
+    panel.background = element_rect(fill = "#FAFAF8", color = NA),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(color = "#E8E3DC"),
+    plot.title    = element_text(face = "bold", size = 15, color = DARK),
+    plot.subtitle = element_text(color = "#7A6A5A", size = 11),
+    axis.title    = element_text(color = "#5A4A3A", size = 11),
+    axis.text     = element_text(color = "#5A4A3A")
+  )
+```
+
+## About this project {#intro}
+
+This project simulates the research a data analyst would do to open a coffee shop in New York City. The project incorporates multiple datasets, aiming to answer various crucial questions for the future success of the business.
+
+**Project Canvas:**
+
+::: question-list
+1.  📍 **Where in NYC should the shop be located?**\
+    Which neighbourhoods offer the best balance of subway access and safety -- where foot traffic is expected?
+
+2.  ☕ **What should be on the menu?**\
+    Which coffee and tea products actually drive the most revenue?
+
+3.  📅 **Which holidays are worth targeting with promotions?**\
+    When does consumer spending peak — and by how much?
+
+4.  🌍 **Where should the coffee be sourced from?**\
+    Who are the major exporters, and what do they charge per tonne?
+    
+5. **Bonus Question!**\
+  In the future, to which countries should we consider expanding internationally?
+:::
+
+| Dataset | Source | Purpose |
+|---|---|---|
+| NYPD Arrest Data (H2) | NYC Open Data | Safety scoring by ZIP |
+| MTA Subway Stations | NYC Open Data | Transit access scoring |
+| Coffee Shop Sales | Kaggle | Menu product analysis |
+| Vending Machine Sales | Kaggle | Menu product analysis |
+| Walmart Weekly Sales | Kaggle | Holiday spending proxy |
+| UN Comtrade API (HS 0901) | UN Statistics | Coffee export suppliers |
+| Coffee Consumption by Country 2026 | World Population Review | International exposure |
+
+
+**Pipeline:** Raw data is cleaned, aggregated into analysis-ready tables and evaluated + visualized.
+`raw` -> `stage` -> `mart` -> `viz`
+
+------------------------------------------------------------------------
+
+## Q1 — Where to open? {#location}
+
+The top-scoring locations combine high subway station density with below-average crime. **Long Island City (11101)** ranks first with a score of 82.3/100 — 13 subway stations and moderate arrests relative to its transit density. However, it is more of an outlier, as both the number of subways aree crimes are high. Eastern Brooklyn dominates the top 10.
+
+```{r location-answer}
+#| eval: false
+
+nyc_subway_locations <- read.csv(file.path(RAW, 'MTA_Subway_Stations.csv'))
+colnames(nyc_subway_locations)
+nyc_subway_locations <- nyc_subway_locations |> 
+  select('Station.ID', 'GTFS.Latitude', 'GTFS.Longitude', 'Georeference', 'Complex.ID', 'Borough') |> 
+  na.omit()
+write.csv(nyc_subway_locations, file.path(STAGE, "stg_nyc_subway_locations.csv"), row.names = F)
+
+crime_data <- read.csv(file.path(RAW,'NYPD_Arrest_Data__Year_to_Date_.csv'))
+crime_data$ARREST_MONTH <- month(as.Date(crime_data$ARREST_DATE, , format = "%m/%d/%Y"))
+unique(crime_data$ARREST_MONTH)
+crime_data <- crime_data |>  
+  filter(ARREST_MONTH %in% c(7,8,9,10,11,12)) |>
+  select(ARREST_KEY, Latitude, Longitude, Location) |> 
+  na.omit() 
+write.csv(crime_data, file.path(STAGE, "stg_crime_data.csv"), row.names = F)
+
+options(tigris_use_cache = T)
+dir.create("map", showWarnings = F)
+
+crime  <- read.csv("stage/stg_crime_data.csv")
+subway <- read.csv("stage/stg_nyc_subway_locations.csv") |>
+  rename(Latitude = GTFS.Latitude, Longitude = GTFS.Longitude)
+
+nyc_zips <- zctas(state = "NY", year = 2010) |>
+  st_transform(4326) |>
+  select(zipcode = ZCTA5CE10, geometry)
+
+crime_sf  <- st_as_sf(crime,  coords = c("Longitude", "Latitude"), crs = 4326)
+subway_sf <- st_as_sf(subway, coords = c("Longitude", "Latitude"), crs = 4326)
+
+crime_counts <- st_join(crime_sf, nyc_zips, left = FALSE) |>
+  st_drop_geometry() |>
+  count(zipcode, name = "crime_count")
+
+subway_counts <- st_join(subway_sf, nyc_zips, left = FALSE) |>
+  st_drop_geometry() |>
+  count(zipcode, name = "subway_stations")
+
+nyc_zips <- nyc_zips |>
+  left_join(crime_counts,  by = "zipcode") |>
+  left_join(subway_counts, by = "zipcode") |>
+  mutate(
+    crime_count     = coalesce(crime_count,     0L),
+    subway_stations = coalesce(subway_stations, 0L)
+  ) |>
+  # Only exclude ZIPs with no signal at all
+  filter(crime_count > 0 | subway_stations > 0)
+
+nyc_zips <- nyc_zips |>
+  mutate(
+    # BUG FIX: normalize on crime_count directly, no population division
+    crime_norm  = (crime_count - min(crime_count)) / (max(crime_count) - min(crime_count)),
+    subway_norm = (subway_stations - min(subway_stations)) / (max(subway_stations) - min(subway_stations)),
+    
+    # Score: lower crime = safer (+50), more subway = better connected (+50)
+    score = round((1 - crime_norm) * 50 + subway_norm * 50, 1),
+    
+    # BUG FIX: crime_level now based on crime_count, not crime_rate
+    crime_level = case_when(
+      crime_count <= quantile(crime_count, 0.33) ~ "Low",
+      crime_count <= quantile(crime_count, 0.66) ~ "Medium",
+      TRUE                                        ~ "High"
+    )
+  ) |>
+  arrange(desc(score)) |>
+  mutate(rank = row_number())
+
+nyc_zips |>
+  st_drop_geometry() |>
+  select(rank, zipcode, crime_level, crime_count, subway_stations, score) |>
+  write.csv("mart/neighborhood_scores.csv", row.names = FALSE)
+
+pal <- colorNumeric(palette = "RdYlGn", domain = nyc_zips$score)
+
+leaflet(nyc_zips) |>
+  addProviderTiles("CartoDB.DarkMatter") |>
+  addPolygons(
+    fillColor   = ~pal(score),
+    fillOpacity = 0.7,
+    color       = "#222",
+    weight      = 0.8,
+    popup = ~paste0(
+      "<b>ZIP ", zipcode, "</b><br>",
+      "Rank: #", rank, "<br>",
+      "Score: <b>", score, "</b>/100<br>",
+      "Crime: <b>", crime_level, "</b> (", format(crime_count, big.mark = ","), " arrests)<br>",
+      "Subway stations: <b>", subway_stations, "</b>"
+    )
+  ) |>
+  addLegend("bottomleft", pal = pal, values = ~score,
+            title = "&#9749; Location Score", opacity = 0.9) |>
+  htmlwidgets::saveWidget("map/nyc_location_map.html", selfcontained = TRUE)
+```
+
+### Interactive map
+
+Each ZIP code is coloured from red (poor score) to green (excellent). Click any polygon to see rank, score, crime level, and subway station count.
+
+```{r location-map, echo=FALSE}
+tags$iframe(
+  src    = "map/nyc_location_map.html",
+  width  = "100%",
+  height = "560px",
+  style  = "border:none; border-radius:10px; display:block;"
+)
+```
+```{r}
+#| echo: false
+head(neighborhood_scores)
+```
+
+
+### How the score is calculated
+
+
+$$
+\text{Score} = 50 \times \underbrace{\text{(normalized safety)}}_{\text{lower crime → higher points}} 
++ 50 \times \underbrace{\text{(normalized transit access)}}_{\text{more subway → higher points}}
+$$
+
+------------------------------------------------------------------------
+
+## Q2 — What to sell? {#menu}
+
+Three products score at the top revenue percentile across all channels and should anchor the menu: **Barista Espresso**, **Latte**, and **Brewed Chai Tea**. Americano with Milk and Gourmet Brewed Coffee are strong additions.
+
+```{r menu-answer}
+#| eval: false
+
+coffee_shop_sales <- read_excel(file.path(RAW, 'Coffee Shop Sales.xlsx'))
+coffee_shop_sales <- coffee_shop_sales |> 
+  filter(product_category %in% c("Coffee", "Tea")) |> 
+  select(transaction_id, transaction_date, transaction_qty, unit_price,
+         product_category, product_type, product_detail) |> 
+  na.omit()
+write.csv(coffee_shop_sales, file.path(STAGE, "stg_coffee_shop_sales.csv"), row.names = F)
+
+vending_machine_sales <- read.csv(file.path(RAW, 'index_1.csv'))
+vending_machine_sales <- vending_machine_sales |> 
+  select(datetime, money, coffee_name) |> 
+  na.omit()
+write.csv(vending_machine_sales, file.path(STAGE, "stg_vending_machine_sales.csv"), row.names = F)
+
+
+coffee_sales <- coffee_shop_sales |> 
+  filter(product_category == "Coffee") |>  
+  group_by(product_type) |> 
+  summarise(
+    num_transactions = n(),                                      
+    total_units_sold = sum(transaction_qty),       
+    total_revenue    = sum(transaction_qty * unit_price)) |> 
+  rename(product = product_type) |> 
+  mutate(share_of_sales = round(total_revenue / sum(total_revenue) * 100, 1),
+         score = percent_rank(total_revenue)
+  ) |> 
+  arrange(desc(total_revenue))
+
+tea_sales <- coffee_shop_sales |> 
+  filter(product_category == "Tea") |> 
+  group_by(product_type) |> 
+  summarise(
+    num_transactions = n(),                                      
+    total_units_sold = sum(transaction_qty),       
+    total_revenue    = sum(transaction_qty * unit_price)                         
+  ) |>
+  rename(product = product_type) |> 
+  mutate(share_of_sales = round(total_revenue / sum(total_revenue) * 100, 1),
+         score = percent_rank(total_revenue)) |>
+  arrange(desc(total_revenue))
+
+vending_machine_sales <- vending_machine_sales |> 
+  group_by(coffee_name) |> 
+  summarise(
+    total_revenue = sum(money),
+    num_transactions = n()
+  ) |> 
+  rename(product = coffee_name) |> 
+  mutate(share_of_sales = round(total_revenue / sum(total_revenue) * 100, 1),
+         score = percent_rank(total_revenue)) |>
+  filter(share_of_sales >= 10) |> 
+  arrange(desc(total_revenue))
+```
+
+::: {=html}
+<iframe 
+  src="https://public.tableau.com/views/CoffeeShopAnalysisVIZ/ProductMenu?:embed=true&:showVizHome=no" 
+  width="100%" 
+  height="700">
+</iframe>
+:::
+
+### How the score is calculated
+
+Revenue is computed separately for three channels: coffee shop coffees, coffee shop teas, and vending machine drinks. Each product is ranked using `percent_rank(total_revenue)` within its channel — a score of 1.0 means top revenue in that channel. Only products above the 50th percentile are retained.
+
+```{r menu-chart, fig.height=4}
+#| eval: false
+
+products_list <- bind_rows(
+  coffee_sales,
+  tea_sales,
+  vending_machine_sales) |>
+  select(product, score) |> 
+  filter(score >= 0.5) |> 
+  arrange(desc(score))
+write.csv(products_list, file.path(MART, 'products_list.csv'), row.names = F)
+```
+
+------------------------------------------------------------------------
+
+## Q3 — When to run promotions? {#holidays}
+
+**Thanksgiving (28 Nov) drives the highest average weekly spend** — \$66.2M, which is 53% above Christmas. Valentine's Day and Labor Day are meaningful secondary peaks. These four dates are the clearest opportunities for seasonal menu specials, pricing adjustments, or targeted marketing.
+
+```{r holidays-answer}
+#| eval: false
+
+holidays_elasticity <- read.csv(file.path(RAW, 'Walmart.csv'))
+holidays_elasticity <- holidays_elasticity |>
+  filter(
+    Holiday_Flag == 1,
+    year(as.Date(Date, format = "%d-%m-%Y")) %in% c(2010, 2011, 2012)
+  ) |>
+  select(Date, Weekly_Sales) |>
+  na.omit() |>
+  group_by(Date) |>
+  summarise(
+    Holiday_Sales = sum(Weekly_Sales),
+    .groups = "drop"
+  ) |>
+  arrange(month(as.Date(Date, format = "%d-%m-%Y")),
+          day(as.Date(Date, format = "%d-%m-%Y")))
+write.csv(holidays_elasticity, file.path(STAGE, "stg_holidays_elasticity.csv"), row.names = F)
+
+```
+```{r}
+#| echo: false
+head(holidays_elasticity)
+```
+
+### How this was measured
+
+Walmart weekly store sales (2010–2012) serve as a consumer spending proxy. Only weeks flagged as `Holiday_Flag == 1` are included. Sales are averaged across all three years and all stores for each holiday. This captures the *relative* demand curve across the year — the same pattern is expected to apply to coffee shop upsell potential.
+
+------------------------------------------------------------------------
+
+## Q4 — Where to source coffee? {#supply}
+
+**Brazil is the default supplier for volume** — largest export value (\$14.7B), highest volume (4.2M tonnes), and the lowest average price per tonne (\$3,466). For premium or specialty offerings, **Colombia** and **Ethiopia** command higher prices but have strong export track records and globally recognised quality reputations.
+
+```{r supply-answer}
+#| eval: false
+
+API_KEY <- "9ee67ca3bb544e37bca294e322b3aa7f"  # https://comtradedeveloper.un.org/
+YEAR    <- "2023"
+HS_CODE <- "0901"  # Coffee
+
+resp <- request("https://comtradeapi.un.org/data/v1/get/C/A/HS") |>
+  req_url_query(
+    cmdCode     = HS_CODE,
+    flowCode    = "X",       # exports
+    period      = YEAR,
+    partnerCode = "0",       # world total
+    partner2Code = "0",
+    includeDesc = "True",
+    `subscription-key` = API_KEY
+  ) |>
+  req_perform() |>
+  resp_body_json(simplifyVector = T)
+
+re_exporters <- c("Germany", "Switzerland", "Italy", "France", "Belgium",
+                  "Netherlands", "Spain", "USA", "Canada",
+                  "United Kingdom", "Sweden", "Poland", "Austria", 
+                  "Estonia", "United Arab Emirates", "Slovenia", "Slovakia",
+                  "Bulgaria", "Portugal", "Luxembourg", "Czechia", 
+                  "Lithuania", "Hungary", "Denmark", "Türkiye")
+
+country_exports <- resp$data |>
+  as_tibble() |>
+  select(
+    Country      = reporterDesc,
+    Country_Code = reporterCode,
+    Year         = period,
+    Value_USD    = primaryValue,
+    Weight_kg    = netWgt
+  ) |>
+  group_by(Country, Country_Code, Year) |>
+  summarise(Value_USD = sum(Value_USD), Weight_kg = sum(Weight_kg), .groups = "drop") |>
+  mutate(
+    Weight_tons = Weight_kg / 1000,
+    Avg_Price_USD_per_ton = round(Value_USD / Weight_tons, 2)
+  ) |>
+  filter(!is.na(Value_USD), !is.na(Weight_kg), Value_USD > 0, Weight_kg > 0,
+         Avg_Price_USD_per_ton >= 3400, Weight_tons >= 10000, Value_USD >= 100e6, !Country %in% re_exporters) |>
+  arrange(Avg_Price_USD_per_ton) |>
+  mutate(Rank = row_number()) |>
+  select(Rank, everything(), -Weight_kg)
+
+write_csv(country_exports, file.path(MART, "coffee_country_exports.csv"))
+```
+
+::: {=html}
+<iframe 
+  src="https://public.tableau.com/views/CoffeeShopAnalysisVIZ/CoffeeExporters?:embed=true&:showVizHome=no" 
+  width="100%" 
+  height="700">
+</iframe>
+:::
+
+```{r}
+#| echo: false
+head(country_exports)
+```
+
+### Data source
+
+Pulled from the **UN Comtrade API** (HS code 0901 — coffee, roasted/unroasted, 2023). Re-exporters (Germany, Italy, USA, Netherlands, etc.) are excluded to show only true origin countries. Filtered to exporters with ≥ 10,000 tonnes, ≥ \$100M value, and avg. price ≥ \$3,400/t to remove noise.
+
+
+## Bonus — Where to expand after NYC? {#global}
+
+If the NYC shop succeeds, **Hong Kong (43.23), Laos (22.59), and Guinea (9.97)** 
+top the list of international expansion candidates by coffee consumption rate. 
+Among larger, more accessible markets, **Canada (6.84), Italy (6.11), 
+and Australia (5.88)** combine high consumption with stable business environments.
+
+::: {=html}
+<iframe 
+  src="https://public.tableau.com/views/CoffeeShopAnalysisVIZ/InternationalExposure?:embed=true&:showVizHome=no" 
+  width="100%" 
+  height="700">
+</iframe>
+:::

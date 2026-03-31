@@ -1,0 +1,30 @@
+# R / RStudio
+.Rhistory
+.Rproj.user/
+.Ruserdata
+.RData
+
+# Quarto temporary files
+.quarto/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary / log files
+*.log
+
+# Tableau packaged workbook (if you don’t want it on GitHub)
+*.twbx
+
+# Rendered project files (optional)
+Coffee\ Shop\ Analysis\ QUARTO_files/
+# docs/ should be included for GitHub Pages hosting, so DO NOT ignore it
+
+# Keep these folders
+# raw/
+# stage/
+# mart/
+# scripts/
+# Coffee Shop Analysis QUARTO.qmd
+# _quarto.yml

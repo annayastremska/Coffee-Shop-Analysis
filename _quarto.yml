@@ -1,0 +1,6 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "How to Open a Coffee Shop in NYC"
