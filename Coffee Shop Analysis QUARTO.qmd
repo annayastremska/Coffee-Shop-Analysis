@@ -1,6 +1,6 @@
 ---
 title: "How to Open a Coffee Shop in NYC"
-subtitle: "A data analytics project — simulating a business decision with open data"
+subtitle: "Simulating a business decision with open data"
 date: today
 format:
   html:
