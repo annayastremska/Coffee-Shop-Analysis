@@ -4,3 +4,10 @@ project:
 
 website:
   title: "How to Open a Coffee Shop in NYC"
+
+format:
+  html:
+    css: style.css
+
+resources:
+  - style.css
