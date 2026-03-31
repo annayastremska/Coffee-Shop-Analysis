@@ -5,4 +5,9 @@ project:
 website:
   title: "How to Open a Coffee Shop in NYC"
 
-css: style.css
+format:
+  html:
+    css: style.css
+
+resources:
+  - style.css
