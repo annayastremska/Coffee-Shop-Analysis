@@ -16,7 +16,7 @@ format:
     fig-height: 5
     self-contained: false
     embed-resources: false
-    css: docs/style.css
+    css: style.css
     include-in-header: |
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 execute:
